@@ -21,5 +21,46 @@
 #include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "libft.h"
+#include <termios.h>
+#include <errno.h>
+
+#define SUCESS 0
+
+// error codes
+
+#define ERROR_127 127
+
+// structs
+
+typedef struct s_args
+{
+	int haspipes;
+	int nbr_pipes;
+	int hasquotes;
+} t_args;
+
+typedef struct s_pipe
+{
+	int id;
+	char *cmd;
+	t_pipe *previous_pipe;
+	t_pipe *next_pipe;
+} t_pipe;
+
+typedef struct s_main
+{
+	t_args args;
+	t_pipe *pipes;
+} t_main;
+
+// ********** PROTOTYPES  ***********
+// minishell.c
+
+void init(void);
+
+// parse.c
+
+void parse_args(char *str);
 
 #endif
