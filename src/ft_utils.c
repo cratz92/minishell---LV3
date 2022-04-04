@@ -6,7 +6,7 @@
 /*   By: cbrito-l <cbrito-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 19:23:22 by cbrito-l          #+#    #+#             */
-/*   Updated: 2022/04/04 20:52:12 by cbrito-l         ###   ########.fr       */
+/*   Updated: 2022/04/04 21:02:52 by cbrito-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ static char **ft_malloc(char *str)
     return (tmp_str);
 }
 
+static char **ft_free_stuff(char **tmp, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i && tmp[j] != 0)
+	{
+		free(tmp[j]);
+		j++;
+	}
+	free(tmp);
+	return (0);
+}
+
+
 char    **ft_split_pipes_endlines(char const *str)
 {
     char **tmp_tokens;
@@ -59,7 +74,7 @@ char    **ft_split_pipes_endlines(char const *str)
             i.finish = i.str_i;
             tmp_tokens[i.index] = ft_substr(str, i.start, (i.finish - i.start));
             if (!tmp_tokens[i.index++])
-                return (NULL);
+                return (ft_free_stuff(tmp_tokens, i.index));
             i.start = i.str_i;
         }
     }
