@@ -12,35 +12,54 @@
 
 #include "../include/minishell.h"
 
-void parse_args(char *str)
+t_args parse_args(char *str)
 {
-	verify pipes '|'
-	/* cmd1 | cmd2 | ... 
-		if they exists and if so, how many
-	*/
+	t_args *args;
 
-	verify end cmd ';'
-	/* cmd1; cmd2; ... 
+	args = malloc(sizeof(t_args) + 1);
+	if (!args)
+	{
+		free(args);
+		return ;
+	}
+
+	/*verify pipes '|'
+	 cmd1 | cmd2 | ... 
+	if they exists and if so, how many
+	*/
+	args->nbr_pipes = verify_pipes(str);
+
+	/*verify end cmd ';'
+	 cmd1; cmd2; ... 
 		if they exists and if so, how many
 	*/
+	args->nbr_endline = verify_cmd_endline(str);
 	
-	verify redirections '<'/'>'/">>"
-	/* program < file 
+	/*verify redirections '<'/'>'/">>"
+	 program < file 
 	   cmd1 > file
 	   cmd1 >> file
 	*/
 
-	split input
-	/* split the initial str into small tokens */
+	
+	/* split the initial str into smaller tokens
+	using | and ; as delimiters */
+	args->tokens = ft_split_pipes_endlines(str);
 
-	verify cmd (echo, pwd, cd, ...)
-	/* search for the command */
+	/* split the str into smaller tokens
+	using rediretions as delimiters */
 	
-	verify ''/""
-	/* verify is '' or "" exists and if its close */
 	
-	verify input according to each cmd
-	/*      echo str/"str"/-n str/-n "str" 
+	/* verify cmd (echo, pwd, cd, ...) 
+	search for the command */
+	
+	
+	/* verify ''/""
+	verify is '' or "" exists and if its close */
+	
+	
+	/*  verify input according to each cmd    
+		echo str/"str"/-n str/-n "str" 
 		cd str/./../~    str=(path)
 		pwd (no args)
 		export no args/str   str=(name=value)
