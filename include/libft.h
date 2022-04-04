@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <stdbool.h>
 
 // LIBC FUNCTIONS
 
@@ -34,5 +35,7 @@ char *ft_strtrim(char const *s1, char const *set);
 char **ft_split(char const *str, char charset);
 void ft_putchar_fd(char c, int fd);
 void ft_putstr_fd(char *s, int fd);
+bool    ft_ternary(int condition);
+
 
 #endif
